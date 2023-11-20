@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block titulo %}
+Panel de Administracion
+{% endblock %}
+{% block content %}
+
+<h1 class="container" style="text-align: center;">Panel de Administración</h1>
+
+<div class="container" style="text-align: center;">
+        <div class="" role="group" aria-label="Basic outlined example"><br><br>
+          <a href="{% url 'admin_productos' 'crear' '0' %}"><button type="button" class="btn btn-outline-primary">Gestión de Productos</button></a><br><br><br><br>
+          <a href="{% url 'bodega' %}"><button type="button" class="btn btn-outline-primary">Gestión de Bodega</button></a> 
+        </div>
+    
+</div>
+
+
+{% endblock %}

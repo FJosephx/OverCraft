@@ -1,0 +1,71 @@
+
+{% extends 'core/base.html' %}
+{% load static %}
+{% block titulo %}
+Iniciar Sesion
+{% endblock titulo %}
+{% block content %}
+
+<h1 class="container mt-4 text-center">{{ mensaje }}</h1>
+
+<!-- formulario inicar sesion -->
+<form class="row g-4 mt-4" method="POST" id="form">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <!-- datos del cliente -->
+        <div class="col-sm-12 col-md-4 col-lg-4">
+
+          {% csrf_token %} 
+          
+
+          <div class="col mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+
+          </div>
+          <div class="col mb-3">
+            {{ form.password.label_tag }}
+
+            {{ form.password }}
+          </div>
+
+
+
+
+          <!-- buton login -->
+          <div class="mt-4">
+            <button type="submit" class="btn btn-primary w-100">Iniciar Sesion</button>
+          </div>
+
+          <!-- not register yet? -->
+          <div class="mt-3 container text-center">
+            No tienes Cuenta? <a href="{% url 'registro' %}" class="text-primary fw-bold"> Registrate Ahora!</a>
+
+          </div>
+
+          {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+
+      </div>
+
+      <!-- botones -->
+      <div class="row " id="botones">
+
+    </div>
+    </div>
+</form>
+
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'core/js/iniciar_sesion.js' %}"></script>
+
+{% endblock script %}

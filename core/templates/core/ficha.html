@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block titulo %}
+{{ nombre }}
+{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'core/css/style_ficha.css' %}" />
+
+{% endblock stylesheet %}
+{% block content %}
+
+<div class="container">
+      <div class="row mt-2">
+        <div class="col-sm text-end">
+          <img style="height: 500px;" src="/media/{{ imagen }}" alt="">
+        </div>
+        <div class="col-sm text-start">
+          <br>
+
+          <h1 class="fs-2 fw-semibold">{{ nombre }}</h1>
+          <h2 class="text-info">{{ html_estado|safe }}</h2>
+
+
+          
+          <p class="fs-4 fw-medium mt-4">{{ html_precio|safe }}</p>
+          <p class="fs-6 fw-bold mb-1">DESCRIPCION</p>
+          <p class="fs-6 fw-normal">
+            {{ descripcion }}
+          </p>
+          <p>
+            {{ html_stock|safe }}
+        </p>
+          <!-- iteracion para redirigir
+            a checkout si es usuario logeado
+            disabled si es admin
+            y registro si no esta logeado -->
+          {% if html_estado|safe == '<span class="text-danger"> AGOTADO </span>' %}
+
+          <!-- falta hacer que el boton disabled tenga el cursor not-allowed -->
+          <a class="deshabilidato"><button class="btn btn-primary btn-lg mt-3 disabled" >Comprar</button></a>
+          <a ><button class="btn btn-outline-primary btn-lg mt-3 disabled" >Agregar al carrito <span><i class="bi bi-cart"></i></span></button></a>
+
+
+          {% else %}
+          {% if user.is_authenticated %}
+          <a href="{% url 'carrito' %}"><button class="btn btn-primary btn-lg mt-3">Comprar</button></a>
+          <a href="{% url 'agregar_producto_al_carrito' id %}"><button class="btn btn-outline-primary btn-lg mt-3">Agregar al carrito <span><i class="bi bi-cart"></i></span></button></a>
+          {% else %}
+          <a href="{% url 'iniciar_sesion' %}?comprar=True"><button class="btn btn-primary btn-lg mt-3">Comprar</button></a>
+          <a href="{% url 'iniciar_sesion' %}?agregar_carrito=True"><button class="btn btn-outline-primary btn-lg mt-3">Agregar al carrito <span><i class="bi bi-cart"></i></span></button></a>
+          {% endif %}
+          
+          {% endif %}
+
+        </div>
+      </div>
+</div>
+
+
+
+{% endblock %}   

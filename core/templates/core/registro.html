@@ -1,0 +1,139 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block titulo %}
+Registro
+{% endblock titulo %}
+{% block content %}
+
+
+<!-- titulo -->
+<div class="container text-center py-0">
+  <h1>Registro de Cliente</h1>
+</div>
+
+
+<form class="py-4 g-4" method="POST" enctype="multipart/form-data" id="form">
+  <!-- todos los datos del cliente -->
+<div class="row fs-6 justify-content-center">
+  
+<div class="col-mb-6 col-sm-4">
+  {% csrf_token %}
+
+
+  <div class="col mb-3">
+    {{ form.username.label_tag }}
+    {{ form.username }}
+
+  </div>
+
+  <div class="row">
+    <div class="col mb-3">
+      {{ form.first_name.label_tag }}
+      {{ form.first_name }}
+  
+    </div>
+    <div class="col mb-3">
+      {{ form.last_name.label_tag }}
+      {{ form.last_name }}
+  
+    </div>
+  </div>
+
+  <div class="col mb-3">
+    {{ form.email.label_tag }}
+    {{ form.email }}
+
+  </div>
+
+  <div class="col mb-3">
+    {{ form.rut.label_tag }}
+    {{ form.rut }}
+
+  </div>
+  
+  <div class="col mb-3">
+    {{ form.direccion.label_tag }}
+    {{ form.direccion }}
+
+  </div>
+
+  <div class="col mb-3">
+    {{ form.password1.label_tag }}
+    {{ form.password1 }}
+
+  </div>
+  <div class="col mb-3">
+    {{ form.password2.label_tag }}
+    {{ form.password2 }}
+
+  </div>
+  <div class="col mb-3">
+    {{ form.subscrito.label_tag }}
+    {{ form.subscrito }}
+  </div>
+  
+</div>
+
+<div class="col-mb-6 col-sm-4">
+  <div class="col mb-3 text-center">
+
+    {% if form.imagen.value %}
+    <img class="border border-3 rounded-4" id="admin-usuario-imagen" style="height: 200px;" src="/media/{{ form.imagen.value }}" alt="Vista previa de la imagen">
+  
+    {% else %}
+    <img class="border border-3 rounded-4" id="admin-usuario-imagen" style="height: 200px;" src="{% static 'core/img/images/empty/empty_img.jpg' %}" alt="Vista previa de la imagen">
+  
+    {% endif %}
+
+  </div>
+
+  <div class="col mb-3">
+
+    {{ form.imagen.label_tag }}
+    {{ form.imagen }}
+
+  </div>
+
+
+  {% if form.errors %}
+  <div class="col mb-3">
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ form.errors }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
+
+  {% endif %}
+
+</div>
+  
+<div class="row" id="botones">
+      <div class="col text-center">
+        <button type="submit" class="btn btn-primary"> Registrarme </button>
+        <button type="reset" class="btn btn-primary"> Limpiar </button>
+      </div>
+</div>
+
+
+    
+</div>
+{% if messages %}
+{% for message in messages %}
+{{ message }}
+
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+{% endif %}
+</form>
+
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'core/js/registro.js' %}"></script>
+
+{% endblock script %}

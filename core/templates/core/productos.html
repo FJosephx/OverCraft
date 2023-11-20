@@ -1,0 +1,204 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% load custom_filters %}
+{% block titulo %}
+{% if form.nombre.value %}
+{{ form.nombre.value }}
+{% else %}
+Admin. Productos
+{% endif %}
+{% endblock titulo %}
+
+{% block content %}
+{% if form.nombre.value %}
+<div class="container text-center text-info py-0">
+  <h1>{{ form.nombre.value }}</h1>
+</div>
+{% else %}
+<div class="container text-center py-0">
+  <h1>Gestión de productos</h1>
+</div>
+{% endif %}
+
+<form class="row py-4 g-4" method="POST" enctype="multipart/form-data" id="form">
+      <!-- todos los datos del cliente -->
+  <div class="row justify-content-center">
+    <div class="col-mb-6 col-sm-3">
+      {% csrf_token %}
+
+
+
+      <div class="col mb-3">
+            {{ form.nombre.label_tag }}
+            {{ form.nombre }}
+      </div>
+
+      <div class="col mb-3">
+            {{ form.descripcion.label_tag }}
+            {{ form.descripcion }}
+      </div>
+
+      <div class="col mb-3">
+            {{ form.precio.label_tag }}
+            {{ form.precio }}
+      </div>
+      
+      
+    </div>
+      
+    <div class="col-mb-6 col-sm-3">
+
+      <!-- <div class="col mb-3">
+        {% if form.imagen.value %}
+        <img style="height: 200px;" id="imagen-" src="/media/{{ form.imagen.value }}" alt="Vista previa de la imagen">
+        <input type="hidden" name="nombre_archivo" value="{{ form.imagen.value }}">
+        {% else %}
+        <img id="imagen-" src="{% static 'core/images/sin-imagen.png' %}" alt="Vista previa de la imagen">
+        <input type="hidden" name="nombre_archivo" name="id_nombre_archivo" value="">
+        {% endif %}
+      </div> -->
+
+
+                
+
+      <div class="col mb-3">
+        {{ form.categoria.label_tag }}
+        {{ form.categoria }}
+      </div>
+
+
+      <div class="row">
+        <div class="col mb-3">
+          {{ form.descuento_subscriptor.label_tag }}
+          {{ form.descuento_subscriptor }}
+        </div>
+        <div class="col mb-3">
+          {{ form.descuento_oferta.label_tag }}
+          {{ form.descuento_oferta }}
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="col-mb-6 col-sm-3">
+      <div class="col mb-3 text-center">
+
+      {% if form.imagen.value %}
+      <img class="border border-3 rounded-4" id="admin-producto-imagen" style="height: 200px;" src="/media/{{ form.imagen.value }}" alt="Vista previa de la imagen">
+      {% else %}
+      <img class="border border-3 rounded-4" id="admin-producto-imagen" style="height: 200px;" src="{% static 'core/img/images/empty/empty_img.jpg' %}" alt="Vista previa de la imagen">
+
+      <!-- <i id="admin-producto-imagen" class="bi bi-card-image" style="font-size: 100px;"></i> -->
+
+      {% endif %}
+      </div>
+
+      <div class="col mb-3">
+
+        {{ form.imagen.label_tag }}
+        {{ form.imagen }}
+
+      </div>
+
+    </div>
+      
+    <div class="row" id="botones">
+          <div class="col text-center">
+
+
+            <input type="submit" class="btn btn-primary ancho-150px" value="Guardar">
+            <a class="btn btn-success ancho-150px" href="{% url 'admin_productos' 'crear' '0' %}"> Nuevo </a>
+            {% if form.instance.id %}
+              <a class="btn btn-danger ancho-150px" href="{% url 'admin_productos' 'eliminar' form.instance.id %}"> Eliminar </a>
+            {% endif %}
+
+
+          </div>
+    </div>
+        
+  </div>
+
+</form>
+
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+{% if productos %}
+  <div class="table-responsive">
+    <table id="tabla-principal" class="container table table-sm table-hover">
+      <thead>
+          <tr>
+              <th> ID </th>
+              <th> Categoría </th>
+              <th> Nombre </th>
+              <th> Precio </th>
+              <th> Subscriptor </th>
+              <th> Oferta </th>
+              <th> Imagen </th>
+              <th> Editar </th>
+              <th> Eliminar </th>
+          </tr>
+      </thead>
+      <tbody class="table-group-divider">
+          {% for producto in productos %}
+              <tr>
+                  <td> {{ producto.id }} </td>
+                  <td> {{ producto.categoria }} </td>
+                  <td> {{ producto.nombre }} </td>
+                  <td> {{ producto.precio|formatear_dinero }} </td>
+                  <td> {{ producto.descuento_subscriptor|formatear_porcentaje }} </td>
+                  <td> {{ producto.descuento_oferta|formatear_porcentaje }} </td>
+                  <td>
+                      <img src="/media/{{ producto.imagen }}" style="height: 150px;"  alt="">
+                  </td>
+                  <td>
+                      <a href="{% url 'admin_productos' 'actualizar' producto.id %}" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i>
+
+                  </td>
+                  <td>
+                      <form method="delete">
+                      
+                            <!-- trigger modal -->
+                            <button type="button" class="btn btn-danger btn-lg bi bi-trash3-fill" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar Producto: {{ producto.id }}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    Estas seguro que quieres eliminar el producto {{ producto.nombre }} {{ producto.id }}
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancelar</button>
+                                    <a href="{% url 'admin_productos' 'eliminar' producto.id %}" class="btn btn-danger btn-lg">Eliminar <i class="bi bi-trash3-fill"></i></a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                      
+                      </form>
+                  </td>
+              </tr>
+          {% endfor %}
+      </tbody>
+    </table> 
+  </div>
+{% endif %}
+
+{% endblock %}   
+
+{% block script %}
+  <script src="{% static 'core/js/producto.js' %}"></script>
+{% endblock script %}

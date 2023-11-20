@@ -1,0 +1,110 @@
+
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block titulo %}
+{{ titulo }}
+{% endblock %}
+{% block content %}
+
+<div id="carouselExampleInterval" class="carousel slide container" data-bs-ride="carousel">
+  <div class="carousel-inner rounded-4">
+    <div class="carousel-item active" data-bs-interval="2000">
+      <img src="{% static 'core/img/images/home/SERVIEXPRESS.png' %}" class="d-block w-100" alt="..." height="250px">
+    </div>
+    <div class="carousel-item" data-bs-interval="6000">
+      <img src="{% static 'core/img/images/home/SERVIEXPRESS2.png' %}" class="d-block w-100" alt="..." height="250px">
+    </div>
+    <div class="carousel-item" data-bs-interval="10000">
+      <img src="{% static 'core/img/images/home/SERVIEXPRESS3.png' %}" class="d-block w-100" alt="..." height="250px">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previo</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Siguiente</span>
+  </button>
+</div>
+
+<main class="container my-4">
+  <h1>Productos Destacados</h1>
+
+  {% comment %} <a href="{% url 'poblar' %}" clas="btn btn-danger">POBLAR BASE DE DATOS</a> {% endcomment %}
+
+  <!-- la iteracion del list esta realcionada al list de views.py def productos -->
+  {% if productos %}
+  <div class="row container mt-5 ">
+    {% for producto in productos %}
+      <div class="card col-sm-12 col-md-6 col-lg-3 col-xl-2 p-3  rounded-4 justify-content-between mx-3">
+        <img class="rounded-4 mx-auto" src="/media/{{ producto.imagen }}" width="150px">
+        
+        <div class="d-flex flex-column justify-content-between mt-4" style="height: 100%;">
+          <div class="card-title text-center">
+            <div class="fw-italic fs-6">{{ producto.nombre }}</div>            
+            <div class="fs-5 fw-bold">{{ producto.html_estado|safe }}</div>
+          </div>
+
+          <div class="about-product mt-3">
+            {{ producto.html_precio|safe }}
+          </div>
+          <div class="about-product mt-3">
+            {{ producto.html_stock|safe }}
+          </div>
+          <a href="{% url 'ficha' producto.id %}" class="btn btn-primary rounded-pill mt-4 mb-1">Agregar al Carrito <span><i class="bi bi-cart"></i></span></a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  {% else %}
+  
+  {% if buscar %}
+  <h1>No se encontro {{ buscar }}</h1>
+
+  {% else %}
+    <h1>No hay Datos</h1>
+  {% endif %}
+
+  {% endif %}
+
+
+
+</main>
+
+
+
+<div class="container">
+
+  <h1 class="text-start">Nuestras Marcas</h1>
+  <br>
+  <div class="row row-cols-4">
+    <div class="col">
+      <img src="{% static 'core/img/images/brands/VW.png' %}" style="height: 200px;" alt="">
+    </div>
+    <div class="col">
+      <img src="{% static 'core/img/images/brands/nissan.png' %}" style="height: 200px;" alt="">
+
+    </div>
+    <div class="col">
+      <img src="{% static 'core/img/images/brands/toyota.png' %}" style="height: 200px;" alt="">
+
+    </div>
+    <div class="col">
+      <img src="{% static 'core/img/images/brands/chevrolet.png' %}" style="height: 200px;" alt="">
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'core/js/script.js' %}"></script>
+
+{% endblock script %}

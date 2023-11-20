@@ -1,0 +1,225 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% load custom_filters %}
+{% block titulo %}
+
+Admin. Usuarios
+{% endblock titulo %}
+
+{% block content %}
+
+<div class="container text-center py-0">
+  <h1>Administrador Usuarios</h1>
+</div>
+<!-- formulario de usuario -->
+<form class="row g-4" method="POST" id="formulario1" novalidate>
+      <div class="container-fluid">
+        <!-- todos los datos del cliente -->
+        <div class="row justify-content-center">
+          <!-- datos del cliente -->
+          <div class="col-sm-12 col-md-4 col-lg-4">
+
+            <!-- ID -->
+            <div class="mb-3">
+                  <label for="iduser" class="form-label">ID del Usuario</label>
+                  <input
+                    required
+                    type="number"
+                    placeholder="35"
+                    class="form-control"
+                    id="iduser"
+                    name="iduser"
+                    aria-describedby="iduserHelp"
+                  />
+                  <div class="invalid-feedback">El campo id es obligatorio</div>
+            </div>
+                
+            <!-- cliente cliente -->
+            <div class="col mb-3">
+              <label for="selectUsuario" class="form-label">Tipo de Usuario</label>
+              <select class="custom-select" name="selectUsuario" id="selectUsuario">
+                <option selected></option>
+                <option value="1">Cliente</option>
+                <option value="2">Administrador</option>
+              </select>
+              <div class="invalid-feedback">Debes seleccionar una opcion</div>
+            </div>  
+
+            <!-- rut -->
+            <div class="mb-3">
+              <label for="rut">RUT</label>
+              <input
+                type="text"
+                class="form-control"
+                id="rut"
+                name="rut"
+                placeholder="Escriba su RUT sin puntos y con guión"
+                aria-describedby="rutHelp"
+              />
+            </div>
+
+            <!-- nombre y apellido -->
+            <div class="row">
+              <!-- nombres -->
+              <div class="col mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input
+                  
+                  type="text"
+                  placeholder=""
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  aria-describedby="nameHelp"
+                />
+              </div>
+
+              <!-- apellidos -->
+              <div class="col mb-3">
+                <label for="lastname" class="form-label">Apellido</label>
+                <input
+                  
+                  type="text"
+                  placeholder=""
+                  class="form-control"
+                  id="lastname"
+                  name="lastname"
+                  aria-describedby="lastnameHelp"
+                />
+              </div>
+            </div>
+
+            <!-- correo -->
+            <div class="mb-3">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                placeholder="Ingrese su email aquí"
+                value=""
+                 
+                aria-describedby="emailHelp"
+              />
+              <div id="emailHelp" class="form-text">Escriba su Email</div>
+            </div>
+
+            <!-- direccion -->
+            <div class="col mb-3">
+              <label for="direccion" class="form-label">Dirección</label>
+              <textarea
+                type="text"
+                placeholder="Padre Alonso de Ovalle #3123, Santiago Centro."
+                class="form-control"
+                id="direccion"
+                aria-describedby="streetHelp"
+                name="direccion"
+              ></textarea>
+              <div id="direccionHelp" class="form-text">
+                Ingrese su calle o avenida
+              </div>
+            </div>
+
+            <!-- checkbox -->
+            <div class="mb-3 form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="exampleCheck1"
+              />
+              <label class="form-check-label" for="exampleCheck1">
+                <strong>Subscribirme a la Fundacion</strong>
+              </label>
+              <div id="nevershaverHelp" class="form-text">
+                Deseo subscribirme con un aporte de $ 3.000 mensuales y obtener
+                un 5% de descuento en mis compras.
+              </div>
+            </div> 
+
+            <!-- Generar Contraseña -->
+            <div class="mb-3">
+              <label for="passwordgenerate">Contraseña</label>
+              <div class="row">
+                <div class="col">
+                  <input
+                  type="password"
+                  id="passwordgenerate"
+                  name="passwordgenerate"
+                  class="form-control"
+                  value=""
+                  disabled
+                />
+                </div>
+
+              <div class="col">
+                <button type="button" class="btn btn-primary"  id="generarContrasena">Generar Contraseña</button>
+
+              </div>
+
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- foto cliente -->
+          <div class="col-sm-12 col-md-4 text-center" id="foto">
+            <img class="container-fluid" src="img/fotoperfil.jpg" alt="" />
+          </div>
+        </div>
+        <!-- botones -->
+        <div class="row" id="botones">
+          <div class="col text-center">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="reset" class="btn btn-outline-primary">Nuevo</button>
+            <button type="reset" class="btn btn-danger">Eliminar</button>
+          </div>
+      </div>
+      </div>
+</form>
+
+
+<!-- Tabla con registro de usuarios -->
+
+{% if usuarios %}
+  <div class="table-responsive">
+    <table id="tabla-principal" class="container table table-sm table-hover">
+      <thead>
+          <tr>
+              <th> ID </th>
+              <th> Rut </th>
+              <th> Nombre </th>
+              <th> Apellido </th>
+              <th> Email </th>
+              <th> Foto Perfil </th>
+              <th> Editar </th>
+          </tr> 
+      </thead>
+      <tbody class="table-group-divider">
+          {% for perfil in usuarios %}
+              <tr>
+                  <td> {{ perfil.id }} </td>
+                  <td> {{ perfil.rut }} </td>
+                  <td> {{ perfil.usuario.first_name }} </td>
+                  <td> {{ perfil.usuario.last_name }} </td>
+                  <td> {{ perfil.usuario.email }} </td>
+                  <td>
+                    <img src="/media/{{ perfil.imagen }}" style="height: 150px;"  alt="">
+                  </td>
+                  <td>
+                    <a href="" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i>
+
+                  </td>
+              </tr>
+          {% endfor %}
+      </tbody>
+    </table> 
+  </div>
+{% endif %}
+
+  
+  
+
+{% endblock %}  
