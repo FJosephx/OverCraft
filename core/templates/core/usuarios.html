@@ -46,18 +46,6 @@ Admin. Usuarios
               <div class="invalid-feedback">Debes seleccionar una opcion</div>
             </div>  
 
-            <!-- rut -->
-            <div class="mb-3">
-              <label for="rut">RUT</label>
-              <input
-                type="text"
-                class="form-control"
-                id="rut"
-                name="rut"
-                placeholder="Escriba su RUT sin puntos y con guión"
-                aria-describedby="rutHelp"
-              />
-            </div>
 
             <!-- nombre y apellido -->
             <div class="row">
@@ -189,7 +177,6 @@ Admin. Usuarios
       <thead>
           <tr>
               <th> ID </th>
-              <th> Rut </th>
               <th> Nombre </th>
               <th> Apellido </th>
               <th> Email </th>
@@ -201,7 +188,6 @@ Admin. Usuarios
           {% for perfil in usuarios %}
               <tr>
                   <td> {{ perfil.id }} </td>
-                  <td> {{ perfil.rut }} </td>
                   <td> {{ perfil.usuario.first_name }} </td>
                   <td> {{ perfil.usuario.last_name }} </td>
                   <td> {{ perfil.usuario.email }} </td>

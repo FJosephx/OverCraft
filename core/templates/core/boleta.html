@@ -16,7 +16,6 @@ Detalle Boleta N° {{ boleta.nro_boleta}}
                 <th> Categoría </th>
                 <th> Producto </th>
                 <th> Precio </th>
-                <th> % Descto <br> Subscriptor </th>
                 <th> % Descto <br> Oferta </th>
                 <th> % Descto <br> Total </th>
                 <th class="text-end"> Descuentos </th>
@@ -29,7 +28,6 @@ Detalle Boleta N° {{ boleta.nro_boleta}}
                     <td> {{ item.bodega.producto.categoria.nombre }} </td>
                     <td> {{ item.bodega.producto.nombre }} </td>
                     <td> {{ item.precio|formatear_dinero }} </td>
-                    <td> {{ item.descuento_subscriptor|formatear_porcentaje }} </td>
                     <td> {{ item.descuento_oferta|formatear_porcentaje }} </td>
                     <td> {{ item.descuento_total|formatear_porcentaje }} </td>
                     <td class="text-end"> {{ item.descuentos|formatear_dinero }} </td>

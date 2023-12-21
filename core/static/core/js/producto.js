@@ -36,13 +36,6 @@ $(document).ready(function(){
                 required: true,
             },
 
-            'descuento_subscriptor': {
-                required: true,
-                digits: true,
-                number: true,
-                range: [0, 100],
-
-             },
             'descuento_oferta': {
                 required: true,
                 digits: true,
@@ -75,15 +68,6 @@ $(document).ready(function(){
                 required: 'Debe ingresar una categoria',
             },
 
-            'descuento_subscriptor': {
-                required: 'Debe Ingresar el Desc. Subscriptor',
-                number: 'Debe ingresar un número',
-                digits: 'Debe ingresar un número entero',
-                
-                range: 'El descuento debe ser un número entre 0 y 100',
-
-
-            },
             
             'descuento_oferta': {
                 required: 'Debe ingresar un Desc. en Oferta',

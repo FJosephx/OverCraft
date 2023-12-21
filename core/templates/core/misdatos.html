@@ -10,21 +10,23 @@
 {% block content %}
 <!-- titulo -->
 <div class="container text-center py-0">
-  <h1>Editar Perfil {{ user.username }}</h1>
+  <h2>Mis Datos</h2>
 </div>
 
 <form class="row g-4 mt-4" method="POST" id="form">
   <div class="container-fluid">
     <div class="row justify-content-center">
       <!-- datos del cliente -->
-      <div class="col-sm-12 col-md-4 col-lg-4">
+      <div class="col-sm-12 col-lg-6 col-md-4 col-lg-4">
 
         {% csrf_token %}
         {{ form.non_field_errors }}
-        
-        <div class="col mb-3">
-          {{ form.rut.label_tag }}
-          {{ form.rut|add_class:'form-control' }}
+          {% if mesg %}
+          <div id="form_message" class="alert alert-success" role="alert">{{ mesg }}</div>
+          {% endif %}
+        <div class="col mb-3 text-center">
+            Nickname Minecraft: <br>
+            {{ user.username}}
         </div>
         <div class="row">
           <div class="col mb-3">
@@ -36,22 +38,28 @@
             {{ form.last_name|add_class:'form-control' }}
           </div>
         </div>
-
         <div class="col mb-3">
           {{ form.email.label_tag }}
           {{ form.email|add_class:'form-control' }}
         </div>
-        <div class="col mb-3">
-          {{ form.direccion.label_tag }}
-          {{ form.direccion|add_class:'form-control' }}
+        <div class="col mb-3 text-center">
+            Foto de perfil:
+
+          {% if user.perfil.imagen %}
+          <img class="border border-3 rounded-4" id="admin-usuario-imagen" style="height: 200px; width: 200px" src="/media/{{ form.imagen.value }}" alt="Vista previa de la imagen">
+
+          {% else %}
+          <img class="border border-3 rounded-4" id="admin-usuario-imagen" style="height: 200px;" src="{% static 'core/img/images/empty/empty_img.jpg' %}" alt="Vista previa de la imagen">
+
+          {% endif %}
+
         </div>
+
         <div class="text-center">
           <div>
             <button class="btn btn-primary" type="submit">Actualizar datos de perfil</button>
           </div>
-          {% if mesg %}
-          <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
-          {% endif %}
+
         </div>
 
 
@@ -62,7 +70,6 @@
 
     </div>
 
-  </div>
   </div>
 </form>
 
