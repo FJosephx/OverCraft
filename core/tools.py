@@ -1,17 +1,19 @@
 from .models import Categoria, Producto, Bodega
 
+
 def eliminar_registro(modelo, clave_primaria):
     eliminado, mensaje = verificar_eliminar_registro(modelo, clave_primaria, True)
     return mensaje
 
+
 def verificar_eliminar_registro(modelo, clave_primaria, debe_eliminar_registro):
     # Obtiene texto de la acción eliminar del modelo
-    accion_eliminar = modelo.acciones()['accion_eliminar']
+    accion_eliminar = modelo().acciones()['accion_eliminar']
 
     # Verificar si el registro que se quiere eliminar realmente existe en la base de datos
     if not modelo.objects.filter(pk=clave_primaria).exists():
         return False, f'¡No se puede {accion_eliminar} {clave_primaria}, ya que no existe en la Base de Datos! Revise si el registro de la tabla de {modelo._meta.verbose_name} ya fue eliminado por otro usuario.'
-    
+
     # Obtener datos del registro que se quiere eliminar
     registro = modelo.objects.get(pk=clave_primaria)
     info_registro = str(registro)

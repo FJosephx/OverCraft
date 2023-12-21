@@ -52,9 +52,8 @@
         </a>
   
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-  
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">Inicio</a></li>
+            <li><a href="{% url 'home' %}" class=" btn nav-link px-2 text-primary">Inicio</a></li>
             <li><a href="{% url 'nosotros' %}" class="nav-link px-2 text-primary">Nosotros</a></li>
 
             {% if user.is_authenticated and not user.is_staff and not user.is_superuser %}
@@ -91,7 +90,7 @@
                 {{ cantidad_productos }}
               </a>
             </li>
-            
+
             {% comment %} {% endif %} {% endcomment %}
             {% endif %}
 
@@ -100,7 +99,7 @@
   
         </div>
         {% comment %} {% if request.path == '/' %} {% endcomment %}
-        
+
         <form class="d-flex pe-3" action="{% url 'home' %}" role="search" method="post">
           {% csrf_token %}
           <input class="form-control me-2" type="search" placeholder="Buscar productos" 
@@ -148,9 +147,6 @@
         href="/"
         class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
       >
-        <svg class="bi me-2" width="40" height="32">
-          <use xlink:href="#bootstrap"></use>
-        </svg>
       </a>
 
       <ul class="nav col-md-4 justify-content-end">
