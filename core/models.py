@@ -30,8 +30,7 @@ class Categoria(models.Model):
 #Modelo para Productos
 class Producto(models.Model):
     nombre = models.CharField(max_length=80, blank=False, null=False, verbose_name="Nombre Producto")
-    descripcion = models.CharField(max_length=80, null=True, blank=True, verbose_name="Descripcion Producto")
-
+    descripcion = models.CharField(max_length=400, null=True, blank=True, verbose_name="Descripcion Producto")
     precio = models.IntegerField(verbose_name="Precio Producto", blank=False, null=False, )
 
     descuento_oferta = models.IntegerField(

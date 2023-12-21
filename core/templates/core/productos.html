@@ -154,7 +154,7 @@ Admin. Productos
                       <img src="/media/{{ producto.imagen }}" style="height: 150px;"  alt="">
                   </td>
                   <td>
-                      <a href="{% url 'admin_productos' 'actualizar' producto.id %}" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i>
+                      <a href="{% url 'admin_productos' 'actualizar' producto.id %}" class="btn btn-primary btn-lg"><i class="bi bi-tools"></i></a>
                   </td>
                   <td>
                       <form method="delete">
@@ -171,7 +171,7 @@ Admin. Productos
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                   </div>
                                   <div class="modal-body">
-                                    Estas seguro que quieres eliminar el producto {{ producto.nombre }} {{ producto.id }}
+                                    ¿Estas seguro que quieres eliminar el producto: {{ producto.nombre }} {{ producto.id }}?
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Cancelar</button>

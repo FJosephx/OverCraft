@@ -11,9 +11,11 @@ from django.contrib import messages
 from .tools import eliminar_registro, verificar_eliminar_registro
 from core.templatetags.custom_filters import formatear_dinero, formatear_numero
 from django.views.decorators.csrf import csrf_exempt
-
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.shortcuts import render
+from .models import Perfil
+from .forms import PerfilUsuarioForm
 
 
 def change_password(request):
@@ -191,7 +193,7 @@ def cambiar_estado_boleta(request, nro_boleta, estado):
 
 
 def miscompras(request):
-    user = User.objects.get(username='usuario_cliente')
+    user = User.objects.get(username=request.user.username)
     perfil = Perfil.objects.get(user=user)
 
     boletas = Boleta.objects.filter(cliente=perfil)
@@ -210,10 +212,6 @@ def miscompras(request):
         'historial': historial
     })
 
-
-from django.shortcuts import render
-from .models import Perfil
-from .forms import PerfilUsuarioForm  # Asegúrate de importar correctamente tu formulario
 
 def misdatos(request):
     data = {"mesg": "", "form": PerfilUsuarioForm}
@@ -251,7 +249,6 @@ def misdatos(request):
     return render(request, "core/misdatos.html", data)
 
 
-
 def nosotros(request):
     data = {'titulo': 'Nosotros'}
     return render(request, 'core/nosotros.html', data)
@@ -261,7 +258,6 @@ def usuarios(request):
     usuarios = Perfil.objects.all()
 
     data = {
-        # 'form': form,
         'usuarios': usuarios
     }
     return render(request, 'core/usuarios.html', data)
